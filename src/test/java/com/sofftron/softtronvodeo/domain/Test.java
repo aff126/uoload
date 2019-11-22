@@ -1,21 +1,21 @@
 package com.sofftron.softtronvodeo.domain;
 
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Map;
-
-import org.apache.catalina.core.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import net.bytebuddy.implementation.attribute.AnnotationAppender;
-
+import com.softtron.softtronvodeo.config.Init;
+import com.softtron.softtronvodeo.service.VideoService;
+@SpringBootTest(classes = {Init.class})
+@RunWith(SpringRunner.class)
 public class Test {
-
+	@Autowired
+	VideoService video;
 	@org.junit.Test
 	public void test() {
-		AnnotationConfigApplicationContext ann = new AnnotationConfigApplicationContext(BeanConfig.class);
-		 Map<String, Person> ps = ann.getBeansOfType(Person.class);
-		 System.out.println(ps);
+		
+		video.insert();
 	}
 
 }

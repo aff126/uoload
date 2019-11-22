@@ -11,5 +11,4 @@ public class BeanConfig {
 	public Person person1() {
 		return new Person("xiaoming",(short)4);
 	}
-	
 }
