@@ -1,0 +1,51 @@
+spring: 
+  #配置数据源
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3309/pinmao?serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    #池启动时创建的连接数量
+    initialSize: 300
+    #在不新建连接的条件下，池中保持空闲的最少连接数
+    minIdle: 100
+    #同一时间可以从池分配的最多连接数量。设置为0时表示无限制
+    maxActive: 1000
+    #在抛出异常之前，池等待连接被回收的最长时间（当没有可用连接时）。设置为-1表示无限等待
+    maxWait: 60000
+    #每60秒运行一次空闲连接回收器  
+    timeBetweenEvictionRunsMillis: 60000
+    #最小存活时间
+    minEvictableIdleTimeMillis: 30000
+    #验证数据库连接的有效性
+    validationQuery: SELECT 1 FROM DUAL
+    #建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测
+    #如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+    testWhileIdle: true
+    #指明是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个
+    #注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串
+    testOnBorrow: false
+    #剔除这些“不可用连接”机制
+    #exceptionSorter: true
+    #指明是否在归还到池中前进行检验
+    testOnReturn: false
+    #开启池的prepared statement 池功能
+    poolPreparedStatements: true
+    #配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    #filter: stat,wall,log4j
+   
+    maxPoolPreparedStatementPerConnectionSize: 20
+    #要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。
+    #在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    #合并多个DruidDataSource的监控数据
+    useGlobalDataSourceStat: true
+
+mybatis:
+  #它一般对应我们的实体类所在的包，这个时候会自动取对应包中不包括包名的简单类名作为包括包名的别名
+  #多个package之间可以用逗号或者分号等来进行分隔。(value的值一定要是包的全名)
+  typeAliasesPackage: com.softtron.softtronvodeo.dao
+  #当mybatis的xml文件和mapper接口不在相同包下时，需要用mapperLocations属性指定xml文件的路径
+  #*是个通配符，代表所有的文件，**代表所有目录下
+  mapperLocations: classpath:com/softtron/softtronvodeo/dao/*.xml
